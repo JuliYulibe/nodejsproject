@@ -8,6 +8,7 @@ const app = express();
 
 //Импорт моделей классов
 const Good = require("./classes/Good")
+const User = require("./classes/User")
 
 // Получаем плагн bodyParser в переменную
 const bodyParser = require('body-parser');
@@ -65,6 +66,44 @@ app.get('/good/get/:id', function(request, response){
 })
 
 /**
+ * Маршрут для получения всех пользователей
+ * Пример использования: http://localhost:3000/good/user/get
+ */
+
+app.get(
+    '/user/get',
+    function(request, response){
+        //Создаем объект на основе класса User
+        
+        const user = new User();
+        //
+        //
+        //
+        user.getAll(response)
+
+    }
+)
+
+/**
+ * Маршрут для получения одного пользователя
+ * Пример использования: http://localhost:3000/user/get/:id
+ */
+
+app.get(
+    '/user/get/:id',
+    function(request, response){
+        const user = new User();
+        const id =request.params.id
+        user.getItem(response, id)
+      //Получить идентификатор из адресной строки  
+
+    }
+
+)
+
+
+
+/**
  * Маршрут для удаления одного товара из интернет магазина
  * Динамический маршрут
  * Пример использования: http://localhost:3000/good/get
@@ -80,6 +119,24 @@ app.get('/good/del/:id', function(request, response){
        
            
 })
+
+/**
+ * Маршрут для удаления одного пользователя из интернет магазина
+ * Динамический маршрут
+ * Пример использования: http://localhost:3000/user/get
+ */
+
+app.get('/good/del/:id', function(request, response){
+    //Создаем на основе класса обЪект
+    const good = new User();
+    //Пролучить идентификатор из адресной строки
+    const id = request.params.id
+    //Задействуем метод, который описан внутри класса
+    good.delItem(response, id)
+       
+           
+})
+
 
 
 app.post('/getdata', function(request, response){
