@@ -1,64 +1,14 @@
-const mysql = require("mysql")
+const DataBase = require('./DataBase')
 /**
  * Класс для работы с товарами из базы данных
  * getAll - метод для получения всех товаров
-
-*/
-
-module.exports = class Good {
-
-
-
-    #config = {
-        host: "94.228.126.172",
-        port: 3306,
-        user: "inordic_sch_usr",
-        password: "VANCfzNsov9GDt1M",
-        database: "inordic_school",
-        connectionLimit :  1000,
-        connectTimeout  :  60 * 60 * 1000,
-        acqureTimeout   :  60 * 60 * 1000,
-        timeout         :  60 * 60 * 1000
+ */
+module.exports = class Good extends DataBase {
+    constructor(){
+        //ключевое слово супер, говорит нам о том, 
+        //что мы забираем из родительского класса его методы и атрибуты
+        super();
+        //устанавливаем название таблицы
+        this.setTableName('goods');
     }
-    getAll(res){
-
-        //Обратимся к файлу конфигурации и пепедадим его параметры в функцию подключения к базе данных
-        //Нам вернется плдключение к базе данных
-        const connect = mysql.createPool(this.#config)
-        //Функция для отправки запроса в базду данных
-        connect.query(
-           'SELECT * FROM goods',
-           function(error, result) {
-                res.send(result)
-           }
-
-        )
-
-       
-    }
-
-    getItem(res, id){
-        const connect = mysql.createPool(this.#config)
-        connect.query(
-            `SELECT * FROM goods WHERE ID='${id}'`,
-            function(error, result) {
-                 res.send(result)
-            }
-        )
-    }
-
-
-delItem(res, id){
-    const connect = mysql.createPool(this.#config)
-    console.log(`DELETE * FROM goods WHERE ID='${id}'`)
-    connect.query(
-        `DELETE FROM goods WHERE ID='${id}'`,
-        function(error, result) {
-             res.send(result)
-        }
-    )
-}
-
-
-
 }
